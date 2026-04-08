@@ -19,5 +19,6 @@ namespace SistemaPontoCego.Infrastructure.Data
         public DbSet<Cor> Cor { get; set; }
         public DbSet<Tamanho> Tamanho { get; set; }
         public DbSet<Loja> Lojas { get; set; }
+        public DbSet<Pagamento> Pagamento { get; set; }
     }
 }
