@@ -32,7 +32,7 @@ namespace SistemaPontoCego.UI
 
         private void btnComprar1_Click_1(object sender, EventArgs e)
         {
-            // O sistema checa a classe que você criou
+            // O sistema checa a classe que foi criada para controlar a sessão do usuário
             if (UsuarioSessao.EstaLogado)
             {
                 // Se estiver logado, abre a tela de Compra
@@ -52,7 +52,7 @@ namespace SistemaPontoCego.UI
 
         private void btnComprar1_Click_2(object sender, EventArgs e)
         {
-            // Esta linha faz aparecer a janelinha de aviso
+            //  faz aparecer a janela  de aviso
             MessageBox.Show("O item foi adicionado ao carrinho!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

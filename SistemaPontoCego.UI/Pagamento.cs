@@ -5,13 +5,13 @@ namespace SistemaPontoCego.UI
 {
     public partial class Pagamento : Form
     {
-        // Esse é o CONSTRUTOR. Ele DEVE ter o nome da classe e receber a string.
+  
         public Pagamento(string valorTotal)
         {
             InitializeComponent();
 
-            // Aqui você joga o valor que recebeu na label da tela de pagamento
-            // Verifique se o nome é 'label1' mesmo. Se for outro nome, troque aqui.
+            // Aqui  joga o valor que recebeu na label da tela de pagamento
+
             label1.Text = "Total a Pagar: " + valorTotal;
         }
 
@@ -47,29 +47,29 @@ namespace SistemaPontoCego.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // 1. Criamos uma nova instância da tela de compras (carrinho)
+            //  nova instância da tela de compras (carrinho)
             Comprar telaCarrinho = new Comprar();
 
-            // 2. Mostramos a tela do carrinho
+            // Mostramos a tela do carrinho
             telaCarrinho.Show();
 
-            // 3. Fechamos a tela de pagamento atual
+            //  Fechar a tela de pagamento atual
             this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // 1. Exibe uma mensagem amigável de sucesso
+            //  Exibe uma mensagem amigável de sucesso
             MessageBox.Show("Pagamento confirmado com sucesso! Obrigado pela compra.", "Sucesso");
 
-            // 2. Cria a instância da tela de Produtos (Vitrine)
-            // Verifique se o nome da classe é 'Produtos' ou 'Form3' como apareceu antes
+            //  Cria a instância da tela de Produtos (Vitrine)
+       
             Produtos telaProdutos = new Produtos();
 
-            // 3. Mostra a vitrine
+            //  Mostra a vitrine
             telaProdutos.Show();
 
-            // 4. Fecha a tela de pagamento atual
+            //  Fecha a tela de pagamento atual
             this.Close();
         }
     }

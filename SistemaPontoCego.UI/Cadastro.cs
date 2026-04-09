@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Security.Cryptography;
-using System.Data.SqlClient; // ESSA LINHA É A MAIS IMPORTANTE
+using System.Data.SqlClient; 
 using System.Windows.Forms;
 
 namespace SistemaPontoCego.UI
@@ -41,103 +41,108 @@ namespace SistemaPontoCego.UI
 
         }
 
-        private void btnCadastrar_Click(object sender, EventArgs e)
+        private void btnCadastrar_Click(object sender, EventArgs e) // Método disparado ao clicar no botão de cadastro
         {
-            // 1. String de Conexão (Ajuste o 'Data Source' para o seu servidor)
+           
             string conexao = @"Data Source=SEU_SERVIDOR;Initial Catalog=SistemaPonto_Cego;Integrated Security=True";
 
-            // 2. Criptografia SHA256 (Transformando a senha aqui mesmo)
+            
             string senhaHash = "";
-            using (SHA256 sha256Hash = SHA256.Create())
+            using (SHA256 sha256Hash = SHA256.Create()) // Cria o motor de criptografia
             {
+                // Converte o texto da TextBox em bytes e gera o cálculo matemático (Hash)
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(txtSenhaCadastro.Text));
                 StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
+
+                for (int i = 0; i < bytes.Length; i++) // Converte os bytes em uma string legível de letras e números
                 {
                     builder.Append(bytes[i].ToString("x2"));
                 }
-                senhaHash = builder.ToString();
+                senhaHash = builder.ToString(); 
             }
 
-            // 3. Inserindo no Banco de Dados
-            using (SqlConnection conn = new SqlConnection(conexao))
+            // 3. O momento em que o C# conversa com o SQL
+            using (SqlConnection conn = new SqlConnection(conexao)) // Cria a ponte de conexão
             {
                 try
                 {
-                    conn.Open();
+                    conn.Open(); // Abre a "porteira" da conexão com o banco
+
+                    // Comando SQL com "Parâmetros" (@Nome, @Email, etc) para evitar ataques de Hackers (SQL Injection)
                     string sql = "INSERT INTO Usuarios (Nome, Email, Senha, Ativo) VALUES (@Nome, @Email, @Senha, 1)";
 
-                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    using (SqlCommand cmd = new SqlCommand(sql, conn)) // Prepara o comando para ser enviado
                     {
-                        // Passando os valores das TextBoxes
+                        // Substitui os @Parâmetros pelos valores que o usuário digitou nas caixas de texto
                         cmd.Parameters.AddWithValue("@Nome", txtNomeCadastro.Text);
                         cmd.Parameters.AddWithValue("@Email", txtEmailCadastro.Text);
-                        cmd.Parameters.AddWithValue("@Senha", senhaHash); // Gravando o HASH, não a senha limpa!
+                        cmd.Parameters.AddWithValue("@Senha", senhaHash); // gravando a Hash da senha, não a senha em texto puro
 
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("Usuário cadastrado com sucesso usando SHA256!");
+                        cmd.ExecuteNonQuery(); // Executa o comando de "Insert" lá no SQL Server
+
+                        MessageBox.Show("Usuário cadastrado com sucesso usando SHA256!"); // Alerta de sucesso
                     }
                 }
-                catch (Exception ex)
+                catch (Exception ex) // Caso ocorra qualquer erro (banco desligado, erro de digitação, etc)
                 {
+                    // Mostra exatamente qual foi o erro para facilitar o conserto
                     MessageBox.Show("Erro ao conectar no banco: " + ex.Message);
                 }
-            }
+            } // Ao sair do 'using', a conexão é fechada automaticamente por segurança
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e) // Método disparado ao clicar no botão "Entrar"
         {
-            // 1. A mesma string de conexão que você usará na aula
+            
             string conexao = @"Data Source=NOMEDOSERVIDOR;Initial Catalog=SistemaPonto_Cego;Integrated Security=True";
 
-            // 2. Transformamos a senha digitada no Login em SHA256
-            // Isso é necessário porque no banco a senha está criptografada
+          
             string senhaLoginHash = "";
             using (SHA256 sha256Hash = SHA256.Create())
             {
+                // Converte o texto da caixa de senha em bytes e gera o Hash
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(txtSenhaLogin.Text));
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < bytes.Length; i++)
                 {
-                    builder.Append(bytes[i].ToString("x2"));
+                    builder.Append(bytes[i].ToString("x2")); // Transforma em texto hexadecimal
                 }
-                senhaLoginHash = builder.ToString();
+                senhaLoginHash = builder.ToString(); // senha do login convertida para Hash, pronta para comparação com o banco de dados
             }
 
-            // 3. Verificação no Banco de Dados
+            // 3. Verificação no Banco de Dados: Onde o sistema checa se as credenciais existem
             using (SqlConnection conn = new SqlConnection(conexao))
             {
                 try
                 {
-                    conn.Open();
-                    // Buscamos um usuário que tenha o e-mail E a senha hash iguais
+                    conn.Open(); // Abre a conexão com o SQL
+
+                    // Comando SQL que tenta selecionar o Nome do usuário onde o E-mail e a Senha coincidam
                     string sql = "SELECT Nome FROM Usuarios WHERE Email = @Email AND Senha = @Senha";
 
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
+                        // Protege contra SQL Injection substituindo os parâmetros pelos valores das caixas de texto
                         cmd.Parameters.AddWithValue("@Email", txtEmailLogin.Text);
-                        cmd.Parameters.AddWithValue("@Senha", senhaLoginHash);
+                        cmd.Parameters.AddWithValue("@Senha", senhaLoginHash); // Comparamos o Hash gerado agora com o do banco
 
-                        // Executa a consulta e retorna o primeiro resultado (o nome do usuário)
+                        // ExecuteScalar: Executa a consulta e traz apenas uma informação (neste caso, o Nome do usuário)
                         object resultado = cmd.ExecuteScalar();
 
-                        if (resultado != null)
+                        if (resultado != null) // Se o resultado não for nulo, significa que encontrou o usuário!
                         {
                             string nomeUsuario = resultado.ToString();
                             MessageBox.Show($"Bem-vindo, {nomeUsuario}! Login realizado com sucesso.");
 
-                            // Aqui você abriria sua tela principal
-                            // FormPrincipal principal = new FormPrincipal();
-                            // principal.Show();
-                            // this.Hide();
+                        
                         }
-                        else
+                        else // Se o resultado for nulo, as credenciais estão erradas
                         {
                             MessageBox.Show("E-mail ou senha incorretos.");
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception ex) // Captura falhas de conexão ou erros de rede
                 {
                     MessageBox.Show("Erro técnico: " + ex.Message);
                 }

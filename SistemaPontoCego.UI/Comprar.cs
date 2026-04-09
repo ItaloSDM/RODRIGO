@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace SistemaPontoCego.UI
 {
-    // MUDANÇA AQUI: De Form1 para Comprar
+   
     public partial class Comprar : Form
     {
         private decimal precoUnitario = 74.90m;
@@ -13,7 +13,7 @@ namespace SistemaPontoCego.UI
         private int qtdCalca = 1;
         private int qtdBermuda = 1;
 
-        // O nome aqui também deve ser Comprar
+       
         public Comprar()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace SistemaPontoCego.UI
             decimal subtotal = (qtdCamiseta + qtdCalca + qtdBermuda) * precoUnitario;
             decimal totalFinal = subtotal + valorFrete;
 
-            // Se estas labels continuarem vermelhas, verifique o (Name) no Designer
+           
             label15.Text = subtotal.ToString("C2");
             label17.Text = totalFinal.ToString("C2");
 
@@ -59,14 +59,13 @@ namespace SistemaPontoCego.UI
             // 2. Mostramos a tela de pagamento
             telaPagamento.Show();
 
-            // 3. Escondemos esta tela (Carrinho/Comprar)
+            // 3. Esconder a tela (Carrinho/Comprar)
             this.Hide();
 
-            // 4. AQUI ESTÁ O SEGREDO: Vamos procurar a tela de Produtos 
-            // que está aberta e escondê-la explicitamente de novo.
+            //ver se a tela de produtos está aberta e esconder ela também
             foreach (Form f in Application.OpenForms)
             {
-                // Verificamos se o formulário se chama "Produtos" ou "Produtos" (conforme seu arquivo)
+                // Verificar se o formulário se chama "Produtos" ou "Produtos" 
                 if (f.Name == "Produtos")
                 {
                     f.Hide();

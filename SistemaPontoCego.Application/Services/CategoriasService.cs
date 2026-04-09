@@ -1,17 +1,17 @@
 ﻿using SistemaPontoCego.Domain.Entities;
 using SistemaPontoCego.Domain.Interfaces;
 
-public class CategoriasService
+public class CategoriasService // Classe que gerencia as regras de negócio das categorias
 {
-    private readonly ICategoriasRepository _repo; //contrato
+    private readonly ICategoriasRepository _repo; // Campo privado que armazena a interface (contrato) de dados
 
-    public CategoriasService(ICategoriasRepository repo) //É o Intermediário que organiza as regras antes de entregar o resultado.
+    public CategoriasService(ICategoriasRepository repo) // Construtor: Recebe o repositório por Injeção de Dependência
     {
-        _repo = repo; //ferramenta que o servico usa pra falar com os dados
+        _repo = repo; // Atribui o repositório recebido ao campo interno para uso na classe
     }
 
-    public List<Categoria> Listar()
+    public List<Categoria> Listar() // Método que solicita a lista de categorias para a camada de dados
     {
-        return _repo.Listar();
+        return _repo.Listar(); // Chama o repositório e retorna o resultado final para quem solicitou
     }
 }

@@ -4,5 +4,5 @@ namespace SistemaPontoCego.Domain.Interfaces;
 
 public interface ICoresRepository
 {
-    List<Cor> Listar();
+    List<Cor> Listar(); // Listar todas as cores
 }
