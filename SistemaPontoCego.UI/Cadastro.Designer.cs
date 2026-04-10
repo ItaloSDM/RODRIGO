@@ -81,7 +81,6 @@
             chkVerSenha.TabIndex = 7;
             chkVerSenha.Text = "Ver Senha";
             chkVerSenha.UseVisualStyleBackColor = false;
-            chkVerSenha.CheckedChanged += chkVerSenha_CheckedChanged;
             // 
             // txtEmailLogin
             // 
@@ -98,7 +97,6 @@
             btnEntrar.TabIndex = 5;
             btnEntrar.Text = "Entrar";
             btnEntrar.UseVisualStyleBackColor = true;
-           
             // 
             // label4
             // 
@@ -110,7 +108,6 @@
             label4.Size = new Size(148, 30);
             label4.TabIndex = 0;
             label4.Text = "Bem - Vindo !";
-            label4.Click += label4_Click;
             // 
             // txtSenhaLogin
             // 
@@ -119,7 +116,6 @@
             txtSenhaLogin.PasswordChar = '*';
             txtSenhaLogin.Size = new Size(100, 23);
             txtSenhaLogin.TabIndex = 2;
-            txtSenhaLogin.TextChanged += txtEmailCadastro_TextChanged;
             // 
             // label3
             // 
@@ -185,7 +181,6 @@
             chkVerSenha2.TabIndex = 7;
             chkVerSenha2.Text = "Ver Senha";
             chkVerSenha2.UseVisualStyleBackColor = false;
-            chkVerSenha2.CheckedChanged += checkBox2_CheckedChanged;
             // 
             // txtCpf
             // 
@@ -220,7 +215,6 @@
             txtNomeCadastro.Name = "txtNomeCadastro";
             txtNomeCadastro.Size = new Size(100, 23);
             txtNomeCadastro.TabIndex = 2;
-            txtNomeCadastro.TextChanged += txtEmailCadastro_TextChanged;
             // 
             // txtEmailCadastro
             // 
@@ -228,7 +222,6 @@
             txtEmailCadastro.Name = "txtEmailCadastro";
             txtEmailCadastro.Size = new Size(100, 23);
             txtEmailCadastro.TabIndex = 2;
-            txtEmailCadastro.TextChanged += txtEmailCadastro_TextChanged;
             // 
             // label9
             // 
@@ -306,7 +299,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "Cadastro";
             StartPosition = FormStartPosition.CenterScreen;
-            Load += CadastrioeLogin_Load;
+            Load += Cadastro_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

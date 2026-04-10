@@ -1,61 +1,65 @@
 ﻿using System;
-using System.Data.SqlClient; // ESSA LINHA TIRA O VERMELHO DO SQL
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace SistemaPontoCego.UI
 {
     public partial class Pagamento : Form
     {
-        // Variável global da classe para armazenar o valor recebido
+        string strCon = @"Server=.\SQLEXPRESS;Database=SistemaPontoCego;Trusted_Connection=True;TrustServerCertificate=True;";
         private string _valorTotal;
 
         public Pagamento(string valorTotal)
         {
             InitializeComponent();
-            _valorTotal = valorTotal; // Salva o valor que veio da outra tela
-            label1.Text = "Total a Pagar: " + _valorTotal;
+            _valorTotal = valorTotal;
+            label1.Text = "Total: " + _valorTotal;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // ATENÇÃO: Troque 'SEU_COMPUTADOR\SQLEXPRESS' pelo nome do seu servidor SQL
-            string strCon = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SistemaPontoCego;Integrated Security=True";
-
-            // SQL para criar o registro da venda
-            string sql = "INSERT INTO Vendas (Produto, Valor) VALUES (@prod, @val)";
-
             using (SqlConnection con = new SqlConnection(strCon))
             {
                 try
                 {
-                    // Limpa o valor para o banco aceitar (remove R$ e espaços)
                     string valorLimpo = _valorTotal.Replace("R$", "").Trim();
-
+                    string sql = "INSERT INTO Vendas (Produto, Valor, DataVenda) VALUES (@prod, @val, @data)";
                     SqlCommand cmd = new SqlCommand(sql, con);
-                    cmd.Parameters.AddWithValue("@prod", "Pedido Realizado");
+                    cmd.Parameters.AddWithValue("@prod", "Venda Estilo Urbano");
                     cmd.Parameters.AddWithValue("@val", decimal.Parse(valorLimpo));
-
+                    cmd.Parameters.AddWithValue("@data", DateTime.Now);
                     con.Open();
                     cmd.ExecuteNonQuery();
 
-                    MessageBox.Show("Pagamento Confirmado no Banco!", "Sucesso");
+                    MessageBox.Show("Venda realizada com sucesso!", "Estilo Urbano");
 
-                    // Abre o Gerenciador e fecha esta tela
+                    // --- BLINDAGEM DO PROCESSO ---
+
+                    // 1. Criamos e mostramos o Gerenciador
                     Gerenciador telaAdm = new Gerenciador();
                     telaAdm.Show();
-                    this.Close();
+
+                    // 2. EM VEZ DE FECHAR, VAMOS APENAS ESCONDER TUDO
+                    // Isso mantém o "fio da vida" do programa ligado
+                    this.Hide();
+
+                    // Esconde as telas que estão lá atrás
+                    if (Application.OpenForms["Comprar"] != null) Application.OpenForms["Comprar"].Hide();
+                    if (Application.OpenForms["Produtos"] != null) Application.OpenForms["Produtos"].Hide();
+                    if (Application.OpenForms["Form1"] != null) Application.OpenForms["Form1"].Hide(); // Caso seu login seja Form1
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro ao conectar no banco: " + ex.Message);
+                    MessageBox.Show("Erro técnico: " + ex.Message);
                 }
             }
         }
 
-        // --- Outros métodos do seu form (cliques de imagem, etc) ---
-        private void pictureBox1_Click(object sender, EventArgs e) => MessageBox.Show("PIX Selecionado");
-        private void pictureBox2_Click(object sender, EventArgs e) => MessageBox.Show("Boleto Selecionado");
-        private void pictureBox3_Click(object sender, EventArgs e) => MessageBox.Show("Cartão Selecionado");
-        private void button1_Click(object sender, EventArgs e) { new Comprar().Show(); this.Close(); }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Pagamento_Load(object sender, EventArgs e) { }
     }
 }

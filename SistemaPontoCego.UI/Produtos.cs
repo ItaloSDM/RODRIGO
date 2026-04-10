@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SistemaPontoCego.UI
@@ -15,54 +10,53 @@ namespace SistemaPontoCego.UI
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        // --- BOTÃO CARRINHO / FINALIZAR ---
+        private void button1_Click(object sender, EventArgs e)
         {
+            Comprar telaFinalizar = new Comprar();
 
-        }
+            // 1. Esconde a vitrine (não fecha, apenas esconde para manter o app vivo)
+            this.Hide();
 
-        private void btnComprar1_Click(object sender, EventArgs e)
-        {
+            // 2. Abre o carrinho como Diálogo
+            // O código "para" nesta linha até o carrinho ser fechado
+            telaFinalizar.ShowDialog();
 
-        }
-
-        private void VitrineDeProdutos_Load(object sender, EventArgs e)
-        {
-
+            // 3. Após o fechamento do carrinho, verificamos:
+            // Se o Gerenciador foi aberto, esta tela continua escondida (e o Pagamento cuidará de tudo)
+            // Se o Gerenciador NÃO existe, significa que o usuário cancelou a compra, então voltamos a vitrine
+            if (Application.OpenForms["Gerenciador"] == null)
+            {
+                this.Show();
+            }
         }
 
         private void btnComprar1_Click_1(object sender, EventArgs e)
         {
-            // O sistema checa a classe que foi criada para controlar a sessão do usuário
             if (UsuarioSessao.EstaLogado)
             {
-                // Se estiver logado, abre a tela de Compra
                 Comprar telaCompra = new Comprar();
-                telaCompra.Show();
                 this.Hide();
+                telaCompra.ShowDialog();
+
+                if (Application.OpenForms["Gerenciador"] == null)
+                    this.Show();
             }
             else
             {
-                // Se não estiver logado, manda para o Cadastro
-                MessageBox.Show("Você precisa estar logado para comprar!");
-                Cadastro telaCadastro = new Cadastro();
-                telaCadastro.Show();
+                MessageBox.Show("Você precisa estar logado!");
+                Cadastro c = new Cadastro();
+                c.Show();
                 this.Hide();
             }
         }
 
         private void btnComprar1_Click_2(object sender, EventArgs e)
         {
-            //  faz aparecer a janela  de aviso
-            MessageBox.Show("O item foi adicionado ao carrinho!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("O item foi adicionado ao carrinho!", "Sucesso");
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Comprar telaFinalizar = new Comprar();
-
-            this.Hide(); // Esconde a tela de Produtos
-            telaFinalizar.ShowDialog(); // Abre a tela de Comprar e trava o código aqui até ela ser fechada
-            this.Show(); // Quando a tela de Comprar fechar, a de Produtos volta a aparecer
-        }
+        private void label1_Click(object sender, EventArgs e) { }
+        private void VitrineDeProdutos_Load(object sender, EventArgs e) { }
     }
 }

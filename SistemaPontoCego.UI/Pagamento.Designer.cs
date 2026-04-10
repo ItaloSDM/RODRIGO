@@ -78,7 +78,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel2
             // 
@@ -109,7 +108,6 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            pictureBox3.Click += pictureBox3_Click;
             // 
             // panel3
             // 
@@ -119,7 +117,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(203, 182);
             panel3.TabIndex = 0;
-
             // 
             // label4
             // 
@@ -141,7 +138,6 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
             // 
             // button2
             // 
@@ -175,7 +171,6 @@
             button1.TabIndex = 4;
             button1.Text = "<--";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
             // 
             // Pagamento
             // 
@@ -193,7 +188,7 @@
             Name = "Pagamento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form4";
-
+            Load += Pagamento_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

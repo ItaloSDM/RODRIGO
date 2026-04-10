@@ -39,9 +39,14 @@
             // 
             // dgvControlador
             // 
+            dgvControlador.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvControlador.BackgroundColor = SystemColors.ButtonHighlight;
+            dgvControlador.BorderStyle = BorderStyle.None;
             dgvControlador.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvControlador.Location = new Point(12, 12);
             dgvControlador.Name = "dgvControlador";
+            dgvControlador.ReadOnly = true;
+            dgvControlador.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvControlador.Size = new Size(776, 236);
             dgvControlador.TabIndex = 0;
             dgvControlador.CellClick += dgvControlador_CellClick;

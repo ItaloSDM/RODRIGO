@@ -1,10 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using SistemaPontoCego.Infrastructure.Data;
+using SistemaPontoCego.Domain.Entities;
 
-var services = new ServiceCollection(); // Cria uma lista (coleção) onde vamos registrar todas as ferramentas do sistema
+namespace SistemaPontoCego.Infrastructure.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-services.AddDbContext<AppDbContext>(options => // Configura o Entity Framework para usar o seu contexto de banco de dados
-    options.UseSqlServer("Server=localhost;Database= SISTEMA_PONTO_CEGO;Trusted_Connection=True;")); // Define que usaremos o SQL Server no computador local e o nome do banco
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                // Conexão oficial para o seu SQLEXPRESS
+                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SistemaPontoCego;Trusted_Connection=True;TrustServerCertificate=True;");
+            }
+        }
 
-var provider = services.BuildServiceProvider(); // Finaliza a configuração e constrói o "provedor" que entregará os serviços prontos para o uso
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<Itens_Pedido> ItensPedido { get; set; }
+        public DbSet<Estoque> Estoque { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<Cor> Cor { get; set; }
+        public DbSet<Tamanho> Tamanho { get; set; }
+        public DbSet<Loja> Lojas { get; set; }
+        public DbSet<Pagamento> Pagamento { get; set; }
+    }
+}
