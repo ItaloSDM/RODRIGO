@@ -23,3 +23,4 @@ namespace SistemaPontoCego.Application.Services
             _repo.Adicionar(pagamento); // Envia os dados do novo pagamento para serem gravados no banco
         }
     }
+}

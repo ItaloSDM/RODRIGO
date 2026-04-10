@@ -45,5 +45,5 @@ namespace SistemaPontoCego.Infrastructure.Repositories
             }
         }
     }
-}
+
 }

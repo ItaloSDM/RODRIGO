@@ -50,4 +50,3 @@ public class EstoqueRepository : IEstoqueRepository
             throw new NotImplementedException();
         }
     }
-}

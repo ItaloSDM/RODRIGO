@@ -50,4 +50,3 @@ public class LojaRepository : ILojaRepository
             throw new NotImplementedException();
         }
     }
-}

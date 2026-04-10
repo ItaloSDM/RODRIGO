@@ -1,7 +1,7 @@
 ﻿using SistemaPontoCego.Domain.Entities;
 using SistemaPontoCego.Domain.Interfaces;
 
-ppublic class LojaService // Classe que gerencia as informações e configurações da Loja
+public class LojaService // Classe que gerencia as informações e configurações da Loja
 {
     private readonly ILojaRepository _repo; // Campo que guarda o contrato de acesso aos dados da loja
 
