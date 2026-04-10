@@ -57,7 +57,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(203, 182);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // label2
             // 
@@ -120,7 +119,7 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(203, 182);
             panel3.TabIndex = 0;
-            panel3.Paint += panel3_Paint;
+
             // 
             // label4
             // 
@@ -194,7 +193,7 @@
             Name = "Pagamento";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form4";
-            Load += Pagamento_Load;
+
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
