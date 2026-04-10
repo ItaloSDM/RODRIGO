@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using SistemaPontoCego.UI;
 
-namespace EstiloUrbano.UI
+namespace SistemaPontoCego.UI
 {
     internal static class Program
     {
@@ -14,7 +14,7 @@ namespace EstiloUrbano.UI
             Application.SetCompatibleTextRenderingDefault(false);
 
             // AQUI É O MOTOR: Ele vai iniciar o programa pela sua tela de Produtos
-            Application.Run(new Comprar());
+            Application.Run(new Produtos());
         }
     }
 }
